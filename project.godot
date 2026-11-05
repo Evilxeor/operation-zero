@@ -1,0 +1,74 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Operation Zero (Copy 1)"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.7", "Mobile")
+config/icon="res://icon.svg"
+
+[input]
+
+move_up={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":87)]
+}
+move_down={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":83)]
+}
+move_left={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":65)]
+}
+move_right={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":68)]
+}
+
+[autoload]
+
+GameRuntime="*res://scripts/game_runtime.gd"
+LightTextures="*res://scripts/light_textures.gd"
+SoundManager="*res://scripts/sound_manager.gd"
+MissionManager="*res://scripts/mission_manager.gd"
+PaintManager="*res://scripts/paint_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Doors"
+2d_physics/layer_3="Operatives"
+2d_physics/layer_4="Enemies"
+2d_physics/layer_5="Projectiles"
+2d_physics/layer_6="Interactables"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+2d/default_gravity=0.0
+2d/default_gravity_vector=Vector2(0, 0)
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.047, 0.055, 0.078, 1)

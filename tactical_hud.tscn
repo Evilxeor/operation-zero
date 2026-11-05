@@ -1,0 +1,648 @@
+[gd_scene format=3 uid="uid://chud001"]
+
+[ext_resource type="Script" path="res://scripts/tactical_hud.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/virtual_joystick.tscn" id="2_stick"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.1, 0.12, 0.16, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.15, 0.85, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_kick"]
+bg_color = Color(0.85, 0.5, 0.1, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_open"]
+bg_color = Color(0.15, 0.6, 0.85, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_charge"]
+bg_color = Color(0.85, 0.2, 0.2, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
+bg_color = Color(0.08, 0.12, 0.18, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.8, 1, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_comms"]
+bg_color = Color(0.05, 0.08, 0.12, 0.75)
+border_width_left = 2
+border_color = Color(0.2, 0.9, 0.5, 0.8)
+corner_radius_top_left = 2
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_win"]
+bg_color = Color(0.06, 0.1, 0.08, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.9, 0.4, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_lose"]
+bg_color = Color(0.12, 0.06, 0.06, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.2, 0.2, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_briefing"]
+bg_color = Color(0.04, 0.08, 0.13, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15, 0.8, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fire_button"]
+bg_color = Color(0.75, 0.12, 0.1, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.45, 0.32, 0.9)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
+[node name="TacticalHUD" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_script")
+
+[node name="RadarContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LeftStick" parent="." instance=ExtResource("2_stick")]
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = -205.0
+offset_right = 206.0
+offset_bottom = -25.0
+grow_vertical = 0
+
+[node name="RightStick" parent="." instance=ExtResource("2_stick")]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -205.0
+offset_right = -30.0
+offset_bottom = -25.0
+grow_horizontal = 0
+grow_vertical = 0
+handle_color = Color(1, 0.35, 0.2, 0.85)
+border_color = Color(0.9, 0.4, 0.3, 0.5)
+
+[node name="FireButton" type="Button" parent="."]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -128.0
+offset_right = -220.0
+offset_bottom = -38.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_fire_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_charge")
+text = "FIRE"
+
+[node name="DoorActionsPanel" type="HBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -90.0
+offset_right = 300.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="BtnKick" type="Button" parent="DoorActionsPanel"]
+custom_minimum_size = Vector2(130, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_kick")
+text = "⚡ KICK DOOR"
+
+[node name="BtnOpen" type="Button" parent="DoorActionsPanel"]
+custom_minimum_size = Vector2(130, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_open")
+text = "🚪 SILENT OPEN"
+
+[node name="BtnCharge" type="Button" parent="DoorActionsPanel"]
+custom_minimum_size = Vector2(130, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_charge")
+text = "💥 C4 CHARGE"
+
+[node name="BtnWallCharge" type="Button" parent="DoorActionsPanel"]
+custom_minimum_size = Vector2(160, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_charge")
+text = "💥 BREACH WALL"
+
+[node name="SquadMenuButton" type="Button" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_top = 16.0
+offset_right = -24.0
+offset_bottom = 62.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 16
+text = "SQUAD  v"
+
+[node name="RoleButton" type="Button" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_top = 68.0
+offset_right = -24.0
+offset_bottom = 112.0
+grow_horizontal = 0
+text = "ROLE: POINTMAN"
+
+[node name="SquadBar" type="GridContainer" parent="."]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.0
+offset_top = 68.0
+offset_right = -24.0
+offset_bottom = 300.0
+grow_horizontal = 0
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="BtnStack" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "🛡️ ON ME"
+
+[node name="BtnMoveBravo" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "🎯 MOVE BRAVO"
+
+[node name="BtnBreach" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "⚡ BREACH & CLEAR"
+
+[node name="BtnCover" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "👁️ COVER REAR"
+
+[node name="BtnHoldFire" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "⚡ FREE"
+
+[node name="BtnStance" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "WEAPONS FREE"
+
+[node name="BtnSplit" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "↔ SPLIT ELEMENT"
+
+[node name="BtnTargetAlpha" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "🎯 TARGET ALPHA"
+
+[node name="BtnHold" type="Button" parent="SquadBar"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "HOLD POSITION"
+
+[node name="ObjectiveBanner" type="PanelContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 16.0
+offset_right = 180.0
+offset_bottom = 62.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
+
+[node name="ObjectiveLabel" type="Label" parent="ObjectiveBanner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "TARGETS: 3 REMAINING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SquadStatusLabel" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 88.0
+offset_right = 340.0
+offset_bottom = 116.0
+theme_override_colors/font_color = Color(1, 0.72, 0.1, 1)
+theme_override_font_sizes/font_size = 14
+text = "BRAVO: REGROUPING ON LEAD"
+vertical_alignment = 1
+
+[node name="RoundStatusLabel" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 54.0
+offset_right = 200.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(1, 0.72, 0.1, 1)
+theme_override_font_sizes/font_size = 14
+text = "ROUND 03:00"
+vertical_alignment = 1
+
+[node name="RoleStatusLabel" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 120.0
+offset_right = 340.0
+offset_bottom = 145.0
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "ROLE: POINTMAN | STANCE: STAND | PLATES: 3"
+vertical_alignment = 1
+
+[node name="RadioCommsBox" type="PanelContainer" parent="."]
+visible = false
+offset_left = 24.0
+offset_top = 120.0
+offset_right = 440.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_comms")
+
+[node name="CommsText" type="Label" parent="RadioCommsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.95, 0.5, 1)
+theme_override_font_sizes/font_size = 16
+text = ""
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="RadioCalloutTimer" type="Timer" parent="."]
+wait_time = 4.5
+one_shot = true
+
+[node name="RightActions" type="VBoxContainer" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -120.0
+offset_right = -24.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="FlashbangBtn" type="Button" parent="RightActions"]
+custom_minimum_size = Vector2(136, 60)
+layout_mode = 2
+text = "💣 FLASHBANG"
+
+[node name="ReloadBtn" type="Button" parent="RightActions"]
+custom_minimum_size = Vector2(136, 60)
+layout_mode = 2
+text = "🔄 RELOAD"
+
+[node name="StanceBtn" type="Button" parent="RightActions"]
+custom_minimum_size = Vector2(136, 55)
+layout_mode = 2
+text = "STANCE: STAND"
+
+[node name="AbilityBtn" type="Button" parent="RightActions"]
+custom_minimum_size = Vector2(136, 55)
+layout_mode = 2
+text = "USE ABILITY"
+
+[node name="AutoFireBtn" type="Button" parent="RightActions"]
+custom_minimum_size = Vector2(136, 48)
+layout_mode = 2
+toggle_mode = true
+text = "AUTO-FIRE: OFF"
+
+[node name="TopLeft" type="VBoxContainer" parent="."]
+offset_left = 25.0
+offset_top = 16.0
+offset_right = 250.0
+offset_bottom = 78.0
+theme_override_constants/separation = 6
+
+[node name="HealthBar" type="ProgressBar" parent="TopLeft"]
+custom_minimum_size = Vector2(200, 16)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+value = 100.0
+show_percentage = false
+
+[node name="AmmoLabel" type="Label" parent="TopLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "AMMO: 30 / 30"
+
+[node name="VictoryModal" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="VictoryModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -120.0
+offset_right = 220.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_win")
+
+[node name="Title" type="Label" parent="VictoryModal/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 25.0
+offset_right = 180.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.2, 0.95, 0.4, 1)
+theme_override_font_sizes/font_size = 24
+text = "🏆 COMPOUND SECURED"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="VictoryModal/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 70.0
+offset_right = 180.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 15
+text = "Extraction complete.\nOperative and squad recovered."
+horizontal_alignment = 1
+
+[node name="BtnRestartWin" type="Button" parent="VictoryModal/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -65.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "PLAY AGAIN"
+
+[node name="DefeatModal" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="DefeatModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -120.0
+offset_right = 220.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_lose")
+
+[node name="Title" type="Label" parent="DefeatModal/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 25.0
+offset_right = 180.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.25, 0.25, 1)
+theme_override_font_sizes/font_size = 24
+text = "☠️ OPERATIVE KIA"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="DefeatModal/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 70.0
+offset_right = 180.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 15
+text = "Pointman eliminated in action.\nMission compromised."
+horizontal_alignment = 1
+
+[node name="BtnRestartLose" type="Button" parent="DefeatModal/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -65.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "TRY AGAIN"
+
+[node name="BriefingModal" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="BriefingModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -170.0
+offset_right = 270.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_briefing")
+
+[node name="Title" type="Label" parent="BriefingModal/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -230.0
+offset_top = 25.0
+offset_right = 230.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "OPERATION ZERO"
+horizontal_alignment = 1
+
+[node name="BriefingText" type="Label" parent="BriefingModal/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -70.0
+offset_right = 225.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 17
+text = "INFILTRATE COMPOUND ZERO\n\nClear all hostile forces. Keep your squad close,\nthen move to the extraction beacon."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ModeButton" type="Button" parent="BriefingModal/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -120.0
+offset_right = 125.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "MODE: EXTRACTION"
+
+[node name="BtnStartMission" type="Button" parent="BriefingModal/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -65.0
+offset_right = 110.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "BEGIN OPERATION"

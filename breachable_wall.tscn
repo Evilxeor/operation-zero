@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cbrchwall001"]
+
+[ext_resource type="Script" path="res://scripts/breachable_wall.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/breachable_wall_visual.gd" id="2_visual"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(96, 24)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1"]
+polygon = PackedVector2Array(-48, -12, 48, -12, 48, 12, -48, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_blast"]
+radius = 180.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detect"]
+size = Vector2(110, 70)
+
+[node name="BreachableWall" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_1")
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+
+[node name="BlastArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastArea"]
+shape = SubResource("CircleShape2D_blast")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_detect")

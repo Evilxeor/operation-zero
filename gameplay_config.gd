@@ -1,0 +1,10 @@
+class_name GameplayConfig
+extends RefCounted
+
+const ROUND_DURATION_SECONDS := 180
+const ROUND_SECONDS_MINIMUM := 1
+const PLAYER_PROJECTILE_SPEED := 1000.0
+const ENEMY_PROJECTILE_SPEED := 550.0
+const ENEMY_FIRING_INTERVAL := 1.1
+const PLAYER_MAX_HEALTH := 100.0
+const ENEMY_MAX_HEALTH := 60.0

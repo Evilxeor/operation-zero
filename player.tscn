@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://bplayer001"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/operator_visual.gd" id="2_visual"]
+[ext_resource type="Script" path="res://scripts/tactical_camera.gd" id="3_camera"]
+[ext_resource type="Script" path="res://scripts/weapon_controller.gd" id="4_weapon"]
+[ext_resource type="Script" path="res://scripts/interaction_controller.gd" id="5_interaction"]
+[ext_resource type="Script" path="res://scripts/movement_controller.gd" id="6_movement"]
+[ext_resource type="Script" path="res://scripts/vision_cone.gd" id="7_vision"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2"]
+radius = 68.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 19
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+accent_color = Color(0.15, 0.85, 1, 1)
+laser_color = Color(0.15, 0.85, 1, 0.6)
+
+[node name="VisionCone" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("7_vision")
+
+[node name="Flashlight" type="PointLight2D" parent="."]
+position = Vector2(10, 0)
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 1.5
+
+[node name="AmbientLight" type="PointLight2D" parent="."]
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(24, 4)
+
+[node name="AimRaycast" type="RayCast2D" parent="."]
+target_position = Vector2(500, 0)
+collision_mask = 11
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("3_camera")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 34
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_2")
+
+[node name="WeaponController" type="Node" parent="."]
+script = ExtResource("4_weapon")
+
+[node name="InteractionController" type="Node" parent="."]
+script = ExtResource("5_interaction")
+
+[node name="MovementController" type="Node" parent="."]
+script = ExtResource("6_movement")

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bv5door001"]
+
+[ext_resource type="Script" path="res://scripts/door.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/door_visual.gd" id="2_visual"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(72, 12)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1"]
+polygon = PackedVector2Array(0, -6, 72, -6, 72, 6, 0, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2"]
+size = Vector2(90, 90)
+
+[node name="Door" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(36, 0)
+shape = SubResource("RectangleShape2D_1")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_1")
+
+[node name="DoorVisual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+door_width = 72.0
+
+[node name="BreachZone" type="Area2D" parent="."]
+position = Vector2(36, 0)
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BreachZone"]
+shape = SubResource("RectangleShape2D_2")

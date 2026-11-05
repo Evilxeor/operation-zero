@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://d3xrippl001"]
+
+[ext_resource type="Script" path="res://scripts/sound_ripple.gd" id="1_script"]
+
+[node name="SoundRipple" type="Node2D"]
+z_index = 10
+script = ExtResource("1_script")
